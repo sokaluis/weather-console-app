@@ -2,11 +2,12 @@ const axios = require("axios").default;
 const fs = require("fs");
 
 class Searches {
-  history = ["Tegucigalpa", "Madrid", "San José", "Bogotá"];
+  history = [];
   file = "./db/data.json";
 
   constructor() {
     //TODO: read DB
+    this.readDB();
   }
 
   get paramsMapBox() {
@@ -23,6 +24,14 @@ class Searches {
       units: "metric",
       // lang: "es",
     };
+  }
+
+  get historyCapitalized() {
+    return this.history.map((place) => {
+      let words = place.split(" ");
+      words = words.map((p) => p[0].toUpperCase() + p.substring(1));
+      return words.join(" ");
+    });
   }
 
   async searchCities(place = "") {
@@ -92,7 +101,8 @@ class Searches {
     }
     const info = fs.readFileSync(this.file, { encoding: "utf-8" });
     const data = JSON.parse(info);
-    return data;
+
+    this.history = data.history;
   };
 }
 

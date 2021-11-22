@@ -42,7 +42,7 @@ const main = async () => {
         console.log("Weather Description: ", description);
         break;
       case 2:
-        searches.history.forEach((item, i) => {
+        searches.historyCapitalized.forEach((item, i) => {
           const idx = `${i + 1}`.green;
           console.log(`${idx}. ${item}`);
         });
