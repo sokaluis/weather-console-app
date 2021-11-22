@@ -15,7 +15,14 @@ class Searches {
     };
   }
 
-  async cities(place = "") {
+  get paramsWeather() {
+    return {
+      appid: process.env.OPENWEATHER_KEY,
+      unit: "metric",
+    };
+  }
+
+  async searchCities(place = "") {
     try {
       const intance = axios.create({
         baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${place}.json`,
@@ -34,6 +41,30 @@ class Searches {
     } catch (error) {
       console.log(error, "No se encontró nada");
       return [];
+    }
+  }
+
+  async searchWeather(lat, lng) {
+    try {
+      const intance = axios.create({
+        baseURL: `api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}`,
+        params: this.paramsWeather,
+      });
+      const {
+        data: {
+          main: { temp, temp_max, temp_min },
+          weather,
+        },
+      } = await intance.get();
+
+      return {
+        temp,
+        temp_min,
+        temp_max,
+        description = weather[0].description,
+      };
+    } catch (error) {
+      console.log(error, "Error al hacer el llamado");
     }
   }
 }

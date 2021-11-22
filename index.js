@@ -20,21 +20,23 @@ const main = async () => {
         // show message
         const searchTerm = await readInput("City:");
         // search places
-        const places = await searches.cities(searchTerm);
+        const places = await searches.searchCities(searchTerm);
         const idSelected = await listPlaces(places);
         // select place
-        const selectedPlace = places.find(({ id }) => id === idSelected);
+        const { name, lat, lng } = places.find(({ id }) => id === idSelected);
         // weather data
-
+        const { temp, description, temp_max, temp_min } =
+          await searches.searchWeather(lat, lng);
         // show result
 
         console.log("\n Información de la ciudad".green);
-        console.log("City:", selectedPlace.name);
-        console.log("Lat:", selectedPlace.lat);
-        console.log("Lng:", selectedPlace.lng);
-        console.log("Temperatura:");
-        console.log("Temperatura min:");
-        console.log("Temperatura max:");
+        console.log("City:", name);
+        console.log("Lat:", lat);
+        console.log("Lng:", lng);
+        console.log("Temperatura:", temp);
+        console.log("Temperatura min:", temp_min);
+        console.log("Temperatura max:", temp_max);
+        console.log("Weather Description", description);
         break;
       case 2:
         break;
