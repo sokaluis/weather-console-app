@@ -82,6 +82,7 @@ class Searches {
 
   saveHistory(place = "") {
     if (this.history.includes(place.toLocaleLowerCase())) return;
+    this.history = this.history.splice(0, 5);
     this.history.unshift(place.toLocaleLowerCase());
 
     //save in db
