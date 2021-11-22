@@ -29,14 +29,15 @@ const main = async () => {
           await searches.searchWeather(lat, lng);
         // show result
 
-        console.log("\n Información de la ciudad".green);
-        console.log("City:", name);
-        console.log("Lat:", lat);
-        console.log("Lng:", lng);
-        console.log("Temperatura:", temp);
-        console.log("Temperatura min:", temp_min);
-        console.log("Temperatura max:", temp_max);
-        console.log("Weather Description", description);
+        console.clear();
+        console.log("\nInformación de la ciudad:".green);
+        console.log("City: ", name);
+        console.log("Lat: ", lat);
+        console.log("Lng: ", lng);
+        console.log("Temperatura: ", temp);
+        console.log("Temperatura min: ", temp_min);
+        console.log("Temperatura max: ", temp_max);
+        console.log("Weather Description: ", description);
         break;
       case 2:
         break;

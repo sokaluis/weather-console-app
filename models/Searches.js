@@ -18,7 +18,8 @@ class Searches {
   get paramsWeather() {
     return {
       appid: process.env.OPENWEATHER_KEY,
-      unit: "metric",
+      units: "metric",
+      // lang: "es",
     };
   }
 
@@ -44,11 +45,11 @@ class Searches {
     }
   }
 
-  async searchWeather(lat, lng) {
+  async searchWeather(lat, lon) {
     try {
       const intance = axios.create({
-        baseURL: `api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}`,
-        params: this.paramsWeather,
+        baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+        params: { ...this.paramsWeather, lat, lon },
       });
       const {
         data: {
@@ -61,7 +62,7 @@ class Searches {
         temp,
         temp_min,
         temp_max,
-        description = weather[0].description,
+        description: weather[0].description,
       };
     } catch (error) {
       console.log(error, "Error al hacer el llamado");
