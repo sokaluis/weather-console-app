@@ -98,48 +98,9 @@ const listPlaces = async (places = []) => {
   return id;
 };
 
-const confirmAction = async (message = "") => {
-  const question = [
-    {
-      type: "confirm",
-      name: "ok",
-      message,
-    },
-  ];
-
-  const { ok } = await inquirer.prompt(question);
-  return ok;
-};
-
-const showCheckList = async (tasks = []) => {
-  const choices = tasks.map((tarea, i) => {
-    const idx = `${i + 1}`.green;
-
-    return {
-      value: tarea.id,
-      name: `${idx}. ${tarea.desc}`,
-      checked: tarea.completedIn ? true : false,
-    };
-  });
-
-  const question = [
-    {
-      type: "checkbox",
-      name: "ids",
-      message: "Selecciones",
-      choices,
-    },
-  ];
-
-  const { ids } = await inquirer.prompt(question);
-  return ids;
-};
-
 module.exports = {
   inquirerMenu,
   pauseMenu,
   readInput,
   listPlaces,
-  confirmAction,
-  showCheckList,
 };

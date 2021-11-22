@@ -1,7 +1,9 @@
 const axios = require("axios").default;
+const fs = require("fs");
 
 class Searches {
   history = ["Tegucigalpa", "Madrid", "San José", "Bogotá"];
+  file = "./db/data.json";
 
   constructor() {
     //TODO: read DB
@@ -68,6 +70,30 @@ class Searches {
       console.log(error, "Error al hacer el llamado");
     }
   }
+
+  saveHistory(place = "") {
+    if (this.history.includes(place.toLocaleLowerCase())) return;
+    this.history.unshift(place.toLocaleLowerCase());
+
+    //save in db
+    this.saveFileDB();
+  }
+
+  saveFileDB = () => {
+    const payload = {
+      history: this.history,
+    };
+    fs.writeFileSync(this.file, JSON.stringify(payload));
+  };
+
+  readDB = () => {
+    if (!fs.existsSync(this.file)) {
+      return null;
+    }
+    const info = fs.readFileSync(this.file, { encoding: "utf-8" });
+    const data = JSON.parse(info);
+    return data;
+  };
 }
 
 module.exports = Searches;
